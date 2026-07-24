@@ -1,0 +1,260 @@
+schema_version: "0.1"
+repositories:
+  - name: FG-architecture
+    github_url: https://github.com/FluvialGeomorph/FG-architecture
+    functional_role: Organization architecture and agentic-context standard
+    primary_language_or_technology: Markdown and YAML
+    lifecycle_status: active-development
+    responsibilities:
+      - Catalog organization-level repository roles and relationships
+      - Govern cross-repository architecture and agentic-context conventions
+    upstream_dependencies: []
+    downstream_consumers:
+      - FluvialGeomorph maintainers and cross-repository work
+    publication_or_deployment_target: GitHub repository
+    authoritative_capabilities:
+      - Organization-level architecture
+      - Repository catalog
+      - FluvialGeomorph agentic-context adoption standard
+    documentation_locations:
+      - README.md
+      - dev/
+    evidence:
+      classification: verified
+      sources:
+        - Git remote configuration
+        - README.md
+        - dev/decisions/adr-0001-organization-context-repository.md
+    open_questions: []
+
+  - name: FG-Tech-Manual
+    github_url: https://github.com/FluvialGeomorph/FG-Tech-Manual
+    functional_role: Technical and methods reference for the FluvialGeomorph project
+    primary_language_or_technology: Quarto book
+    lifecycle_status: active
+    responsibilities:
+      - Explain methods, features, metrics, validation, and software dependencies
+      - Document the toolbox, rapid-assessment tools, and R packages
+    upstream_dependencies:
+      - FluvialGeomorph-toolbox
+      - fluvgeo
+      - RegionalCurve
+      - FG-User-Manual
+    downstream_consumers:
+      - Technical readers and maintainers
+    publication_or_deployment_target: GitHub Pages at https://fluvialgeomorph.github.io/FG-Tech-Manual/
+    authoritative_capabilities:
+      - Project technical methods documentation
+      - Technical descriptions of toolbox data and workflows
+    documentation_locations:
+      - README.md
+      - _quarto.yml
+      - "*.qmd"
+      - docs/
+    evidence:
+      classification: verified
+      sources:
+        - README.md
+        - _quarto.yml
+        - Intro.qmd
+        - Features.qmd
+        - dependencies.qmd
+    open_questions:
+      - Confirm the formal review authority for scientific method and validation content.
+
+  - name: FG-User-Manual
+    github_url: https://github.com/FluvialGeomorph/FG-User-Manual
+    functional_role: User-facing procedures and review guidance for FluvialGeomorph workflows
+    primary_language_or_technology: Quarto book
+    lifecycle_status: active
+    responsibilities:
+      - Provide step-by-step toolbox workflows
+      - Describe software requirements, tutorial data, and report review
+    upstream_dependencies:
+      - FluvialGeomorph-toolbox
+    downstream_consumers:
+      - FluvialGeomorph toolbox users
+      - FG-Tech-Manual
+    publication_or_deployment_target: GitHub Pages at https://fluvialgeomorph.github.io/FG-User-Manual/
+    authoritative_capabilities:
+      - User procedures for toolbox operation
+      - User-facing workflow and report-review guidance
+    documentation_locations:
+      - README.md
+      - _quarto.yml
+      - "*.qmd"
+      - docs/
+    evidence:
+      classification: verified
+      sources:
+        - README.md
+        - _quarto.yml
+        - SoftwareRequirements.qmd
+    open_questions:
+      - Correct the README description if the user manual, rather than technical methods, is intended to be authoritative.
+
+  - name: fluvgeo
+    github_url: https://github.com/FluvialGeomorph/fluvgeo
+    functional_role: Shared R implementation of fluvial geomorphic analysis
+    primary_language_or_technology: R package
+    lifecycle_status: active
+    responsibilities:
+      - Implement fluvial geomorphic calculations and validation helpers
+      - Produce analysis outputs, plots, and reports used by clients
+    upstream_dependencies:
+      - RegionalCurve
+      - fluvgeodata
+    downstream_consumers:
+      - FluvialGeomorph-toolbox
+      - ohwm2
+      - FG-Tech-Manual
+    publication_or_deployment_target: GitHub releases/source installation and pkgdown at https://fluvialgeomorph.github.io/fluvgeo/
+    authoritative_capabilities:
+      - Shared R fluvial-geomorphology calculations
+      - R-side geospatial data contracts and reporting helpers
+    documentation_locations:
+      - README.md
+      - DESCRIPTION
+      - man/
+      - NEWS.md
+      - dev/
+    evidence:
+      classification: verified
+      sources:
+        - DESCRIPTION
+        - README.md
+        - R/stream_power.R
+        - FluvialGeomorph-toolbox R scripts that call fluvgeo
+        - ohwm2 DESCRIPTION
+    open_questions:
+      - Confirm function-level scientific ownership and required validation evidence.
+
+  - name: fluvgeodata
+    github_url: https://github.com/FluvialGeomorph/fluvgeodata
+    functional_role: Test-data package for fluvgeo
+    primary_language_or_technology: R data package
+    lifecycle_status: active
+    responsibilities:
+      - Package data required to test fluvgeo
+    upstream_dependencies: []
+    downstream_consumers:
+      - fluvgeo
+    publication_or_deployment_target: GitHub releases/source installation
+    authoritative_capabilities:
+      - Packaged fluvgeo test fixtures
+    documentation_locations:
+      - README.md
+      - DESCRIPTION
+      - man/
+      - NEWS.md
+    evidence:
+      classification: verified
+      sources:
+        - DESCRIPTION
+        - README.md
+        - fluvgeo DESCRIPTION
+    open_questions:
+      - Confirm dataset-level provenance and maintenance ownership.
+
+  - name: FluvialGeomorph-toolbox
+    github_url: https://github.com/FluvialGeomorph/FluvialGeomorph-toolbox
+    functional_role: ArcGIS toolbox for terrain-based river analysis
+    primary_language_or_technology: Python, R, and ArcGIS toolbox
+    lifecycle_status: active
+    responsibilities:
+      - Orchestrate ArcGIS geoprocessing workflows
+      - Extract terrain-derived river features and invoke R analyses and reports
+    upstream_dependencies:
+      - fluvgeo
+      - RegionalCurve
+      - ArcGIS Pro
+      - R
+    downstream_consumers:
+      - FG-User-Manual
+      - FG-Tech-Manual
+      - GIS analysts
+    publication_or_deployment_target: GitHub release ZIP for desktop ArcGIS use
+    authoritative_capabilities:
+      - ArcGIS tool orchestration
+      - Toolbox-specific geoprocessing behavior
+    documentation_locations:
+      - Readme.md
+      - NEWS.md
+      - Getting_Started_with_FluvialGeomorph_SpeakerNotes.md
+    evidence:
+      classification: verified
+      sources:
+        - Readme.md
+        - NEWS.md
+        - install/FG_utils.R
+        - tools/
+        - report/
+    open_questions:
+      - Confirm whether the Python package metadata in setup.py remains a supported publication path.
+
+  - name: ohwm2
+    github_url: https://github.com/FluvialGeomorph/ohwm2
+    functional_role: Shiny application for remote ordinary-high-water-mark analysis
+    primary_language_or_technology: R package with golem and Shiny
+    lifecycle_status: experimental
+    responsibilities:
+      - Provide an interactive small-site OHWM workflow
+      - Orchestrate terrain acquisition, cross-section and flowline input, and result presentation
+    upstream_dependencies:
+      - fluvgeo
+    downstream_consumers:
+      - OHWM application users
+    publication_or_deployment_target: rsconnect-compatible Shiny deployment; exact hosted target requires confirmation
+    authoritative_capabilities:
+      - ohwm2 user interface and reactive workflow orchestration
+      - Application-specific result gating and state transitions
+    documentation_locations:
+      - README.md
+      - DESCRIPTION
+      - dev/
+      - man/
+    evidence:
+      classification: verified
+      sources:
+        - DESCRIPTION
+        - README.md
+        - app.R
+        - dev/10_design.md
+        - dev/20_testing.md
+    open_questions:
+      - Confirm the current production hosting target and public application URL.
+      - Confirm whether ohwm2 remains the active application or is a stabilization branch toward another canonical app.
+
+  - name: RegionalCurve
+    github_url: https://github.com/FluvialGeomorph/RegionalCurve
+    functional_role: Regional hydraulic geometry data and calculation package
+    primary_language_or_technology: R package
+    lifecycle_status: active
+    responsibilities:
+      - Maintain compiled regional hydraulic geometry relationships
+      - Calculate and visualize regional hydraulic dimensions
+    upstream_dependencies: []
+    downstream_consumers:
+      - fluvgeo
+      - FluvialGeomorph-toolbox
+      - FG-Tech-Manual
+    publication_or_deployment_target: GitHub releases/source installation and pkgdown at https://fluvialgeomorph.github.io/RegionalCurve/
+    authoritative_capabilities:
+      - Regional-curve dataset
+      - Regional hydraulic geometry lookup, calculation, and visualization
+    documentation_locations:
+      - README.md
+      - DESCRIPTION
+      - man/
+      - vignettes/
+      - NEWS.md
+    evidence:
+      classification: verified
+      sources:
+        - DESCRIPTION
+        - README.md
+        - _pkgdown.yml
+        - fluvgeo DESCRIPTION
+        - FluvialGeomorph-toolbox install/FG_utils.R
+    open_questions:
+      - Confirm the scientific review authority for adding or revising regional relationships.
